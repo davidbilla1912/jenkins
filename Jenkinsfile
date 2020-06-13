@@ -10,7 +10,7 @@ pipeline {
            steps {
                 sh 'mvn --version'
                 docker 'docker version'
-		echo "Build"
+		echo "BUILD TAG - $env.BUILD_TAG"
 	}
      }
      stage('test') {
@@ -24,8 +24,25 @@ pipeline {
         }
      }
 
+        stage ('Build docker imge') {
+           steps {
+             script {
+               dockerimage = docker.build("sundarhub/currency-exchange:${env.BUILD_TAG}")
+            }
+        }
 
    }
+        stage ('push docker image') {
+           steps {
+              script {
+                 docker.withRegistry('', 'dockerhub') {
+                 dockerImage.push();
+                 dockerImage.push('latest');
+           }
+         }
+        }
+  }
+}
    post {
      always {
         echo "alway"
