@@ -8,9 +8,7 @@ pipeline {
      stages {
 	stage('Build') {
            steps {
-                sh 'mvn --version'
-                docker 'docker version'
-		echo "BUILD TAG - $env.BUILD_TAG"
+                echo "BUILD TAG - $env.BUILD_TAG"
 	}
      }
      stage('test') {
