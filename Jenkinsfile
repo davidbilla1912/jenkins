@@ -19,5 +19,22 @@ pipeline {
 
 
    }
+   post {
+     always {
+        echo "alway"
+     }
+     success {
+         echo "success"
+     }
+     failure {
+         echo "failure"
+     }
+     changed {
+         echo "changed"
+     }
+     unstable {
+         echo "unstable"
+     }
+   }
 
 }
