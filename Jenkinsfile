@@ -1,9 +1,15 @@
 pipeline {
-     agent { docker { image 'maven:3.6.3'}  }
+     agent any
+     environment {
+        dockerHome = tool "mydocker"
+        mavenHome = tool "mymaven"
+        PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
+    }
      stages {
 	stage('Build') {
            steps {
                 sh 'mvn --version'
+                docker 'docker version'
 		echo "Build"
 	}
      }
